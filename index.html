@@ -1,65 +1,63 @@
-<!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <div id="app" class="bigBoss">
-    <div class="secret" id="secret">click me!</div>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+  		<div id="app" class="bigBoss">
+    			<div class="secret" id="secret">
+				click me!
+			</div>
+    			<div class="myTitle">
+      				Bio Thing on Myself (Corbin Tindall)
+    			</div>
+    		<br />
 
-    <div class="myTitle">
-      Bio Thing on Myself (Corbin Tindall)
-    </div>
-    <br />
+    			<div class="learningFlex">
+      				<div class="tabSelector" id="homeBtn">
+        				Home
+      				</div>
+      				<div class="tabSelector" id="makeTab">
+        				Early Life
+      				</div>
+      				<div class="tabSelector" id="viewTab">
+        				Current
+      				</div>	
+      				<div class="tabSelector" id="whatsNext">
+        				Whats Next?
+      				</div>
 
-    <div class="learningFlex">
-      <div class="tabSelector" id="homeBtn">
-        Home
-      </div>
-      <div class="tabSelector" id="makeTab">
-        Early Life
-      </div>
-      <div class="tabSelector" id="viewTab">
-        Current
-      </div>
-      <div class="tabSelector" id="whatsNext">
-        Whats Next?
-      </div>
+    			</div>
+    		<br />
+   		<br />
+    		<br />
 
-    </div>
-    <br />
-    <br />
-    <br />
+    			<div id="chosenContent" class="chosenContent">
+    			</div>
+  		</div>
 
-    <div id="chosenContent" class="chosenContent">
-
-    </div>
-
-  </div>
-
-  <div class="ticTacToe" id="ticTacToe" style="display:none">
-    <button onclick="location.reload();" class="backBtn">
-      Back
-    </button>
-    <div class="board" id="board">
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-    </div>
-    <div class="winning-message" id="winningMessage">
-      <div id="winningMessageText"></div>
-      <button id="restartButton">
-        Restart
-      </button>
-    </div>
-  </div>
-</body>
+  		<div class="ticTacToe" id="ticTacToe" style="display:none">
+    			<button onclick="location.reload();" class="backBtn">
+      				Back
+    			</button>
+    			<div class="board" id="board">
+      			<div class="cell" data-cell></div>
+     			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+      			<div class="cell" data-cell></div>
+    		</div>
+    		<div class="winning-message" id="winningMessage">
+      			<div id="winningMessageText"></div>
+      			<button id="restartButton">
+        			Restart
+      			</button>
+    		</div>
+  		</div>
+	</body>
 
 <script>
 window.onload = function() {
@@ -256,7 +254,7 @@ const chosenContent = document.getElementById("chosenContent")
   current.classList.add("text")
   const img = document.createElement("img")
   img.classList.add("rotate")
-  img.src = "https://www.kindpng.com/picc/m/85-854663_wwii-ranger-diamond-hd-png-download.png" alt="Wwii Ranger Diamond, HD Png Download@kindpng.com"
+  img.src = "https://www.kindpng.com/picc/m/85-854663_wwii-ranger-diamond-hd-png-download.png"
 	const link = "https://en.wikipedia.org/wiki/75th_Ranger_Regiment"
 	const element = document.createElement("a")
 	element.setAttribute("href", link)
