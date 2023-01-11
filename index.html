@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<header>
+<link rel="stylesheet" type="text/css" href="">
+</header>
+<html>
+<header>
+
+</header>
+<body>
+  <div id="app" class="bigBoss">
+    <div class="secret" id="secret">click me!</div>
+
+    <div class="myTitle">
+      Bio Thing on Myself (Corbin Tindall)
+    </div>
+    <br />
+
+    <div class="learningFlex">
+      <div class="tabSelector" id="homeBtn">
+        Home
+      </div>
+      <div class="tabSelector" id="makeTab">
+        Early Life
+      </div>
+      <div class="tabSelector" id="viewTab">
+        Current
+      </div>
+      <div class="tabSelector" id="whatsNext">
+        Whats Next?
+      </div>
+
+    </div>
+    <br />
+    <br />
+    <br />
+
+    <div id="chosenContent" class="chosenContent">
+
+    </div>
+
+  </div>
+
+  <div class="ticTacToe" id="ticTacToe" style="display:none">
+    <button onclick="location.reload();" class="backBtn">
+      Back
+    </button>
+    <div class="board" id="board">
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+    </div>
+    <div class="winning-message" id="winningMessage">
+      <div id="winningMessageText"></div>
+      <button id="restartButton">
+        Restart
+      </button>
+    </div>
+  </div>
+</body>
+
+<script>
+window.onload = function() {
+const homePage = document.getElementById("homeBtn")
+homePage.click()
+}
+
+
+const secret = document.getElementById("secret") 
+secret.onclick = function () {
+  const app = document.getElementById("app")
+  const targetDiv = document.getElementById("ticTacToe")
+  app.innerHTML = ""
+    if (targetDiv.style.display !== "none") {
+      targetDiv.style.display = "none";
+    } else {
+      targetDiv.style.display = "block";
+      }
+};
+	
+secret.addEventListener("click", () => {
+
+	const PLAYER_X_CLASS = 'x'
+	const PLAYER_O_CLASS = 'circle'
+	const WINNING_COMBINATIONS = [
+	  [0, 1, 2],
+	  [3, 4, 5],
+	  [6, 7, 8],
+	  [0, 3, 6],
+	  [1, 4, 7],
+	  [2, 5, 8],
+	  [0, 4, 8],
+	  [2, 4, 6]
+	]
+	const cellElements = document.querySelectorAll('[data-cell]')
+	const boardElement = document.getElementById('board')
+	const winningMessageElement = document.getElementById('winningMessage')
+	const restartButton = document.getElementById('restartButton')
+	const winningMessageTextElement = document.getElementById('winningMessageText')
+	let isPlayer_O_Turn = false
+	  
+	  startGame()
+	
+	restartButton.addEventListener('click', startGame)
+	
+	function startGame() {
+	  isPlayer_O_Turn = false
+	  cellElements.forEach(cell => {
+	    cell.classList.remove(PLAYER_X_CLASS)
+	    cell.classList.remove(PLAYER_O_CLASS)
+	    cell.removeEventListener('click', handleCellClick)
+	    cell.addEventListener('click', handleCellClick, { once: true })
+	  })
+	setBoardHoverClass()
+	winningMessageElement.classList.remove('show')
+	}
+	  function handleCellClick(e) {
+	  const cell = e.target
+	  const currentClass = isPlayer_O_Turn ? PLAYER_O_CLASS : PLAYER_X_CLASS
+	  placeMark(cell, currentClass)
+	  if (checkWin(currentClass)) {
+	    endGame(false)
+	  } else if (isDraw()) {
+	      endGame(true)
+	    } else {
+	      swapTurns()
+	      setBoardHoverClass()
+	      }
+	}
+  
+  function endGame(draw) {
+  	if (draw) {
+    	winningMessageTextElement.innerText = "It's a Draw!"
+    } else {
+    		winningMessageTextElement.innerText = "Player With" + " " + (isPlayer_O_Turn ? "O" : "X") + " " + "Wins!"
+    	}
+      winningMessageElement.classList.add ('show')
+  }
+  
+  function isDraw() {
+		return [...cellElements].every(cell => {
+			return cell.classList.contains(PLAYER_X_CLASS) || cell.classList.contains(PLAYER_O_CLASS)
+		})
+	}
+  
+  function placeMark(cell, currentClass) {
+		cell.classList.add(currentClass)
+	}
+
+	function swapTurns() {
+		isPlayer_O_Turn = !isPlayer_O_Turn
+	}
+  
+  function setBoardHoverClass() {
+		boardElement.classList.remove(PLAYER_X_CLASS)
+		boardElement.classList.remove(PLAYER_O_CLASS)
+		if (isPlayer_O_Turn) {
+			boardElement.classList.add(PLAYER_O_CLASS)
+		} else {
+				boardElement.classList.add(PLAYER_X_CLASS)
+		}
+	}
+  
+  function checkWin(currentClass) {
+		return WINNING_COMBINATIONS.some(combination => {
+			return combination.every(index => {
+				return cellElements[index].classList.contains(currentClass)
+			})
+		})
+	}
+  
+  
+	   
+})
+
+function loadHomePage() {
+const chosenContent = document.getElementById("chosenContent")
+  chosenContent.innerHTML = ""
+  const home = document.createElement("div")
+  home.innerHTML = "Bio on Corbin Tindall - very cool dude"
+  const home2 = document.createElement("div")
+  home2.innerHTML = "He likes all sorts of things and doesnt like other things!"
+  home.classList.add("text")
+  home2.classList.add("text")
+  const img = document.createElement("img")
+  img.src = "https://www.animatedimages.org/data/media/238/animated-eagle-image-0036.gif"
+  chosenContent.appendChild(home)
+  chosenContent.appendChild(img)
+  chosenContent.appendChild(home2)
+  
+  document.getElementById("homeBtn").style.color = "yellow"
+  document.getElementById("makeTab").style.color = "#12B097"
+  document.getElementById("whatsNext").style.color = "#12B097"
+  document.getElementById("viewTab").style.color = "#12B097"
+  
+  const buttonHolder = document.createElement("div")
+  const nextButton = document.createElement("button")
+  buttonHolder.classList.add("buttonHolder")
+  nextButton.classList.add("button")
+  nextButton.innerHTML = "Next"
+  nextButton.onclick = loadEarlyLife
+  
+  buttonHolder.appendChild(nextButton)
+  chosenContent.appendChild(buttonHolder)
+}
+
+const homeBtn = document.getElementById("homeBtn")
+homeBtn.addEventListener("click", () => {
+	loadHomePage()
+})
+
+function loadEarlyLife () {
+const chosenContent = document.getElementById("chosenContent")
+  chosenContent.innerHTML = ""
+  const earlyLife = document.createElement("div")
+  earlyLife.innerHTML = "Corbin Tindall was born in Portland Oregon on July 5th 2000. He grew up in Scappoose Oregon and then graduated Scappoose High School in 2018."
+  earlyLife.classList.add("text")
+  const img = document.createElement("img")
+  img.src = "data:image/png;base64,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"
+  chosenContent.appendChild(img)
+  chosenContent.appendChild(earlyLife)
+  
+  document.getElementById("makeTab").style.color = "yellow"
+  document.getElementById("homeBtn").style.color = "#12B097"
+  document.getElementById("whatsNext").style.color = "#12B097"
+  document.getElementById("viewTab").style.color = "#12B097"
+  
+  const buttonHolder = document.createElement("div")
+  const nextButton = document.createElement("button")
+  const prevButton = document.createElement("button")
+  buttonHolder.classList.add("buttonHolder")
+  nextButton.classList.add("button")
+  prevButton.classList.add("button")
+  nextButton.innerHTML = "Next"
+  prevButton.innerHTML = "Previous"
+  buttonHolder.appendChild(prevButton)
+  buttonHolder.appendChild(nextButton)
+  chosenContent.appendChild(buttonHolder)
+  
+  prevButton.onclick = loadHomePage
+  nextButton.onclick = loadCurrentPage
+}
+
+const makeTab = document.getElementById("makeTab")
+makeTab.addEventListener("click", () => {
+	loadEarlyLife()
+})
+
+function loadCurrentPage() {
+const chosenContent = document.getElementById("chosenContent")
+  chosenContent.innerHTML = ""
+  const current = document.createElement("div")
+  current.innerHTML = "Upon graduating High School he enlisted in the Army and was stationed at 2nd Ranger Battalion in Ft. Lewis Washington. Corbin has deployed to Afgahnistan twice with Charlie Company and hasn't done jack shit over there."
+  current.classList.add("text")
+  const img = document.createElement("img")
+  img.classList.add("rotate")
+  img.src = "https://www.kindpng.com/picc/m/85-854663_wwii-ranger-diamond-hd-png-download.png" alt="Wwii Ranger Diamond, HD Png Download@kindpng.com"
+	const link = "https://en.wikipedia.org/wiki/75th_Ranger_Regiment"
+	const element = document.createElement("a")
+	element.setAttribute("href", link)
+	element.innerHTML = "Learn More About the 75th Ranger Regiment Here"
+  chosenContent.appendChild(img)
+  chosenContent.appendChild(current)
+  chosenContent.appendChild(element)
+  
+  document.getElementById("homeBtn").style.color = "#12B097"
+  document.getElementById("makeTab").style.color = "#12B097"
+  document.getElementById("whatsNext").style.color = "#12B097"
+  document.getElementById("viewTab").style.color = "yellow"
+  
+  const buttonHolder = document.createElement("div")
+  const nextButton = document.createElement("button")
+  const prevButton = document.createElement("button")
+  buttonHolder.classList.add("buttonHolder")
+  nextButton.classList.add("button")
+  prevButton.classList.add("button")
+  nextButton.innerHTML = "Next"
+  prevButton.innerHTML = "Previous"
+  buttonHolder.appendChild(prevButton)
+  buttonHolder.appendChild(nextButton)
+  chosenContent.appendChild(buttonHolder)
+  
+  prevButton.onclick = loadEarlyLife
+  nextButton.onclick = loadWhatsNext
+}
+
+
+
+const viewTab = document.getElementById("viewTab")
+viewTab.addEventListener("click", () => {
+ loadCurrentPage()
+})
+
+function loadWhatsNext () {
+const chosenContent = document.getElementById("chosenContent")
+  chosenContent.innerHTML = ""
+  const whatsNext = document.createElement("div")
+  whatsNext.innerHTML = "Who knows... He'll probably get out of the Army and become homeless!"
+  whatsNext.classList.add("text")
+  const img = document.createElement("img")
+  img.src = "https://media2.giphy.com/media/3o6ZsZ78LqiaSNJrd6/giphy.gif"
+  chosenContent.appendChild(img)
+  chosenContent.appendChild(whatsNext)
+  
+  document.getElementById("homeBtn").style.color = "#12B097"
+  document.getElementById("makeTab").style.color = "#12B097"
+  document.getElementById("whatsNext").style.color = "yellow"
+  document.getElementById("viewTab").style.color = "#12B097"
+  
+  const buttonHolder = document.createElement("div")
+  const nextButton = document.createElement("button")
+  const prevButton = document.createElement("button")
+  buttonHolder.classList.add("buttonHolder")
+  nextButton.classList.add("button")
+  prevButton.classList.add("button")
+  nextButton.innerHTML = "Home"
+  prevButton.innerHTML = "Previous"
+  buttonHolder.appendChild(prevButton)
+  buttonHolder.appendChild(nextButton)
+  chosenContent.appendChild(buttonHolder)
+  
+  prevButton.onclick = loadCurrentPage
+  nextButton.onclick = loadHomePage
+}
+
+const whatsNextBtn = document.getElementById("whatsNext")
+whatsNextBtn.addEventListener("click", () => {
+  loadWhatsNext()
+})
+</script>
+</html>
